@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020"],
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "outDir": "../../dist/cli",
+    "rootDir": ".",
+    "baseUrl": "..",
+    "paths": {
+      "@/*": ["./*"],
+      "@services/*": ["./services/*"],
+      "@types/*": ["./types/*"]
+    }
+  },
+  "include": ["./**/*", "../services/**/*", "../types/**/*"],
+  "exclude": ["node_modules"]
+}
