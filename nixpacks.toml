@@ -2,7 +2,7 @@
 nixPkgs = ["...", "nodejs_18", "chromium"]
 
 [phases.install]
-cmds = ["cd api && npm install"]
+cmds = ["npm install"]
 
 [start]
-cmd = "cd api && node index.js"
+cmd = "node index.js"

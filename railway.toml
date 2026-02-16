@@ -1,8 +1,9 @@
 [build]
 builder = "NIXPACKS"
+rootDir = "api"
 
 [deploy]
-startCommand = "cd api && node index.js"
+startCommand = "node index.js"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
