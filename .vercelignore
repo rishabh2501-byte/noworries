@@ -1,0 +1,10 @@
+# Ignore server-side code for Vercel (frontend only)
+src/server/
+src/electron/
+src/cli/
+api/
+tests/
+*.test.ts
+*.spec.ts
+playwright.config.ts
+tsconfig.electron.json
