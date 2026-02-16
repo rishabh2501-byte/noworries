@@ -135,7 +135,7 @@ export class WebAnalyzer {
 
     const domTree = await this.page.evaluate(() => {
       const getComputedStyleData = (element: Element): Record<string, string> => {
-        const computed = window.getComputedStyle(element);
+        const computed = (globalThis as any).window.getComputedStyle(element);
         return {
           color: computed.color,
           backgroundColor: computed.backgroundColor,
@@ -205,7 +205,7 @@ export class WebAnalyzer {
           return null;
         }
 
-        const computed = window.getComputedStyle(element);
+        const computed = (globalThis as any).window.getComputedStyle(element);
         
         // Skip invisible elements
         if (computed.display === 'none' || computed.visibility === 'hidden') {
@@ -260,7 +260,7 @@ export class WebAnalyzer {
       const element = document.querySelector(sel);
       if (!element) return null;
 
-      const computed = window.getComputedStyle(element);
+      const computed = (globalThis as any).window.getComputedStyle(element);
       return {
         color: computed.color,
         backgroundColor: computed.backgroundColor,
@@ -530,7 +530,7 @@ export class WebAnalyzer {
               return;
             }
             
-            var computed = window.getComputedStyle(element);
+            var computed = (globalThis as any).window.getComputedStyle(element);
             if (computed.display === 'none' || computed.visibility === 'hidden') {
               return;
             }
