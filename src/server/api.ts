@@ -20,7 +20,7 @@ let authContext: BrowserContext | null = null;
 
 // Extract locators endpoint
 app.post('/api/extract-locators', async (req, res) => {
-  const { url, useAuth } = req.body;
+  const { url } = req.body;
 
   if (!url) {
     return res.status(400).json({ success: false, error: 'URL is required' });
@@ -31,17 +31,12 @@ app.post('/api/extract-locators', async (req, res) => {
   try {
     console.log(`Extracting locators from: ${url}`);
     
-    // If useAuth and we have an authenticated context, use it
-    if (useAuth && authContext) {
-      const result = await webAnalyzer.extractLocatorsWithContext(url, authContext);
-      res.json({ success: true, result });
-    } else {
-      const result = await webAnalyzer.extractLocators(url, {
-        headless: true,
-        viewport: { width: 1920, height: 1080 },
-      });
-      res.json({ success: true, result });
-    }
+    // Extract locators (useAuth not supported in this simplified version)
+    const result = await webAnalyzer.extractLocators(url, {
+      headless: true,
+      viewport: { width: 1920, height: 1080 },
+    });
+    res.json({ success: true, result });
   } catch (error) {
     console.error('Extraction failed:', error);
     res.status(500).json({
@@ -49,9 +44,7 @@ app.post('/api/extract-locators', async (req, res) => {
       error: error instanceof Error ? error.message : 'Extraction failed',
     });
   } finally {
-    if (!useAuth) {
-      await webAnalyzer.close();
-    }
+    await webAnalyzer.close();
   }
 });
 
@@ -338,16 +331,17 @@ app.post('/api/extract-authenticated', async (req, res) => {
       })()
     `);
 
+    const typedLocators = locators as any[];
     const summary = {
-      buttons: locators.filter((l: any) => l.elementType === 'button').length,
-      inputs: locators.filter((l: any) => l.elementType === 'input').length,
-      links: locators.filter((l: any) => l.elementType === 'link').length,
-      images: locators.filter((l: any) => l.elementType === 'image').length,
-      forms: locators.filter((l: any) => l.elementType === 'form').length,
-      containers: locators.filter((l: any) => l.elementType === 'container').length,
-      withId: locators.filter((l: any) => l.id).length,
-      withClass: locators.filter((l: any) => l.className).length,
-      withDataTestId: locators.filter((l: any) => l.dataTestId).length,
+      buttons: typedLocators.filter((l) => l.elementType === 'button').length,
+      inputs: typedLocators.filter((l) => l.elementType === 'input').length,
+      links: typedLocators.filter((l) => l.elementType === 'link').length,
+      images: typedLocators.filter((l) => l.elementType === 'image').length,
+      forms: typedLocators.filter((l) => l.elementType === 'form').length,
+      containers: typedLocators.filter((l) => l.elementType === 'container').length,
+      withId: typedLocators.filter((l) => l.id).length,
+      withClass: typedLocators.filter((l) => l.className).length,
+      withDataTestId: typedLocators.filter((l) => l.dataTestId).length,
     };
 
     res.json({
@@ -355,8 +349,8 @@ app.post('/api/extract-authenticated', async (req, res) => {
       result: {
         url,
         timestamp: new Date().toISOString(),
-        totalElements: locators.length,
-        locators,
+        totalElements: typedLocators.length,
+        locators: typedLocators,
         summary,
       },
     });
@@ -370,7 +364,7 @@ app.post('/api/extract-authenticated', async (req, res) => {
 });
 
 // Close authenticated session
-app.post('/api/close-session', async (req, res) => {
+app.post('/api/close-session', async (_req, res) => {
   try {
     if (authBrowser) {
       await authBrowser.close();
@@ -384,7 +378,7 @@ app.post('/api/close-session', async (req, res) => {
 });
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 

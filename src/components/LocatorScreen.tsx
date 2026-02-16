@@ -61,7 +61,7 @@ const LocatorScreen: React.FC = () => {
   const extractViaAPI = async () => {
     try {
       // Use authenticated endpoint if logged in
-      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const baseUrl = (import.meta as any).env?.VITE_API_URL || '';
       const endpoint = isLoggedIn 
         ? `${baseUrl}/api/extract-authenticated` 
         : `${baseUrl}/api/extract-locators`;
@@ -96,7 +96,7 @@ const LocatorScreen: React.FC = () => {
     setLoginMessage('Opening browser...');
 
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const baseUrl = (import.meta as any).env?.VITE_API_URL || '';
       const response = await fetch(`${baseUrl}/api/start-login`, {
         method: 'POST',
         headers: {
@@ -122,7 +122,7 @@ const LocatorScreen: React.FC = () => {
 
   const handleCloseSession = async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const baseUrl = (import.meta as any).env?.VITE_API_URL || '';
       await fetch(`${baseUrl}/api/close-session`, { method: 'POST' });
       setIsLoggedIn(false);
       setLoginMessage('');

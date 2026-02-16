@@ -579,22 +579,23 @@ export class WebAnalyzer {
       `);
 
       // Calculate summary
+      const typedLocators = locators as ElementLocator[];
       const summary = {
-        buttons: locators.filter((l: ElementLocator) => l.elementType === 'button').length,
-        inputs: locators.filter((l: ElementLocator) => l.elementType === 'input').length,
-        links: locators.filter((l: ElementLocator) => l.elementType === 'link').length,
-        images: locators.filter((l: ElementLocator) => l.elementType === 'image').length,
-        forms: locators.filter((l: ElementLocator) => l.elementType === 'form').length,
-        containers: locators.filter((l: ElementLocator) => l.elementType === 'container').length,
-        withId: locators.filter((l: ElementLocator) => l.id).length,
-        withClass: locators.filter((l: ElementLocator) => l.className).length,
-        withDataTestId: locators.filter((l: ElementLocator) => l.dataTestId).length,
+        buttons: typedLocators.filter((l) => l.elementType === 'button').length,
+        inputs: typedLocators.filter((l) => l.elementType === 'input').length,
+        links: typedLocators.filter((l) => l.elementType === 'link').length,
+        images: typedLocators.filter((l) => l.elementType === 'image').length,
+        forms: typedLocators.filter((l) => l.elementType === 'form').length,
+        containers: typedLocators.filter((l) => l.elementType === 'container').length,
+        withId: typedLocators.filter((l) => l.id).length,
+        withClass: typedLocators.filter((l) => l.className).length,
+        withDataTestId: typedLocators.filter((l) => l.dataTestId).length,
       };
 
       return {
         url,
         timestamp: new Date().toISOString(),
-        totalElements: locators.length,
+        totalElements: typedLocators.length,
         locators: locators as ElementLocator[],
         summary,
       };
