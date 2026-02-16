@@ -9,7 +9,7 @@
     "dev:react": "vite",
     "dev:api": "npx tsx src/server/api.ts",
     "dev:electron": "concurrently \"npm run dev:react\" \"npm run dev:api\" \"wait-on http://localhost:5173 && electron .\"",
-    "build": "npm run build:react && npm run build:electron",
+    "build": "npm run build:react",
     "build:react": "tsc && vite build",
     "build:electron": "tsc -p tsconfig.electron.json",
     "preview": "vite preview",
