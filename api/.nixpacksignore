@@ -1,0 +1,8 @@
+# Ignore everything except api directory
+!api/
+api/node_modules/
+api/dist/
+*.log
+.env
+.env.local
+.env.production
