@@ -1,4 +1,8 @@
-FROM mcr.microsoft.com/playwright:v1.41.2-jammy
+FROM node:18-alpine
+
+# Install Chromium for Playwright
+RUN apk add --no-cache chromium \
+    && npx playwright install chromium --with-deps
 
 WORKDIR /app
 
