@@ -232,7 +232,7 @@ export class WebAnalyzer {
         };
       };
 
-      const body = document.body;
+      const body = (globalThis as any).document.body;
       const result: any[] = [];
       
       for (const child of body.children) {
@@ -257,7 +257,7 @@ export class WebAnalyzer {
     }
 
     const styles = await this.page.evaluate((sel) => {
-      const element = document.querySelector(sel);
+      const element = (globalThis as any).document.querySelector(sel);
       if (!element) return null;
 
       const computed = (globalThis as any).window.getComputedStyle(element);
@@ -573,7 +573,7 @@ export class WebAnalyzer {
             }
           }
 
-          processElement(document.body);
+          processElement((globalThis as any).document.body);
           return results;
         })()
       `);
