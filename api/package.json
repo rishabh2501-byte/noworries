@@ -8,7 +8,7 @@
     "start": "node index.js",
     "dev": "npx tsx index.ts",
     "build": "echo 'No build step required - API is server-side'",
-    "postinstall": "npx playwright install chromium --with-deps"
+    "postinstall": "npx playwright install chromium"
   },
   "dependencies": {
     "cors": "^2.8.5",

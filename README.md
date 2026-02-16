@@ -95,7 +95,6 @@ npm run package
 ```bash
 # Basic usage
 npm run cli -- --site https://example.com --figma https://figma.com/file/ABC123/Design
-
 # With options
 npm run cli -- \
   --site https://example.com \
@@ -103,7 +102,6 @@ npm run cli -- \
   --output ./reports \
   --format pdf \
   --viewport 1920x1080
-
 # Using screenshots
 npm run cli -- \
   --site-screenshot ./actual-ui.png \
